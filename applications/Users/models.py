@@ -8,15 +8,16 @@ class Usuario(AbstractUser, PermissionsMixin):
         ("0","Administrador"),
         ("1","Usuario"),
     )
-    usuario = models.CharField("Usuario", max_length=50,unique=True)
+    username = models.CharField("Username", max_length=50,unique=True)
     nombre = models.CharField('Nombre', max_length=50)
     rol = models.CharField('Rol',default='0', max_length=1,choices=ROL_CHOICES)
     password = models.CharField("Contraseña", max_length=100)
-    USERNAME_FIELD = 'usuario'
+    USERNAME_FIELD = 'username'
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     objects = UserManager()
+    about_me = models.TextField(max_length=50,blank=True,null=True)
     REQUIRED_FIELDS = ['nombre']
 
     class Meta:
@@ -26,4 +27,4 @@ class Usuario(AbstractUser, PermissionsMixin):
         verbose_name_plural = 'Usuarios'
 
     def __str__(self):
-        return self.nombre
+        return f'{self.nombre}+ {self.id}'

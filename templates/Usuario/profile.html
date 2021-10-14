@@ -1,0 +1,119 @@
+{% extends 'base-content.html' %}
+{% load static %}
+{% block title %}
+    Perfil
+{% endblock title %} 
+
+{% block content %}
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-3">
+        <div class="card profile-card">
+            <div class="profile-header">&nbsp;</div>
+            <div class="profile-body">
+                <div class="image-area">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/000/550/731/small/user_icon_004.jpg" alt="AdminBSB - Profile Image" />
+                </div>
+                <div class="content-area">
+                    <h3>{{ user.username }}</h3>
+                    <p>{{ user.nombre }}</p>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+  
+        </div>
+
+    </div>
+    <div class="col-xs-12 col-sm-9">
+        <div class="card">
+            <div class="body">
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation"><a href="#profile_settings" aria-controls="settings" role="tab" data-toggle="tab">Configuracion del perfil</a></li>
+                        <li role="presentation"><a href="#delete_profile" aria-controls="settings" role="tab" data-toggle="tab">Darse de baja</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in" id="profile_settings">
+                            <form class="form-horizontal" action="{% url 'users_app:actualizar-perfil' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="NameSurname" class="col-sm-2 control-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" id="NameSurname" name="nombre" placeholder="Name Surname" value="{{ user.nombre }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="NameSurname" class="col-sm-2 control-label">Apellido</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" id="NameSurname" name="last_name" placeholder="Name Surname" value="{{ user.last_name }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email" class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-line">
+                                            <input type="email" class="form-control" id="Email" name="email" placeholder="Email" value="{{ user.email }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputExperience" class="col-sm-2 control-label">Sobre mi</label>
+
+                                    <div class="col-sm-10">
+                                        <div class="form-line">
+                                            <textarea class="form-control" id="InputExperience" name="about_me" rows="3" placeholder="Experience">{{ user.about_me }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-danger">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade in" id="delete_profile">
+                            <form class="form-horizontal" action="{% url 'users_app:elimnar-perfil' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="OldPassword" class="col-sm-3 control-label">Contraseña</label>
+                                    <div class="col-sm-9">
+                                        <div class="form-line">
+                                            <input type="password" class="form-control" id="OldPassword" name="OldPassword" placeholder="Contraseña" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="NewPasswordConfirm" class="col-sm-3 control-label">Confirmar</label>
+                                    <div class="col-sm-9">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" id="NewPasswordConfirm" name="NewPasswordConfirm" placeholder="Escriba confirmar" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-danger">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block js %}
+    <script src="{% static 'js/pages/examples/profile.js' %}"></script>
+{% endblock js %}
+    
