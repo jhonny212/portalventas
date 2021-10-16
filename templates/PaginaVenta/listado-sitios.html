@@ -1,0 +1,46 @@
+{% extends 'base-content.html' %}
+{% load static %}
+
+{% block title %}
+    Sitios de pagina de venta
+{% endblock title %}
+{% block content %}
+<div class="row">    
+    {% for sitio in  sitios%}
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="header bg-blue-grey">
+                <h2>
+                    <small>{{ sitio.nombre_sitio }}</small>
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                   
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            {% if user.rol == '0'%}
+                                <li><a href="{% url 'PaginaVenta_app:actualizar-pagina-venta' sitio.id %}">Actualizar sitio</a></li>
+                            {% else %}
+                                <li><a href="javascript:void(0);">Suscribirse</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                {{ sitio.descripcion }}
+            </div>
+        </div>
+    </div>
+    
+    {% endfor %}
+</div>
+{% endblock content %}
+
+
+{% block js %}
+    <script src="{% static 'js/pages/cards/colored.js' %}"></script>
+{% endblock js %}
+    
