@@ -1,0 +1,59 @@
+﻿{% extends 'base-content.html' %}
+{% load static %}
+{% block title %}
+    Crear Categoria
+{% endblock title %} 
+
+{% block content %}
+<div class="block-header">
+    <h2>AÑADIR CATEGORIA</h2>
+</div>
+<!-- Horizontal Layout -->
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Formulario de Categoria
+                </h2>
+            </div>
+            <div class="body">
+                {% if success %}
+                 <!-- Alerta -->
+                 <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Ya existe una categoria con el nombre: <strong>{{ name_category }}</strong>, vuelve a intentarlo 
+                </div>
+                {% endif %}
+                <form method="post", enctype="multipart/form-data0">
+                    {% csrf_token %}
+                    <!-- Nombre de la categoria -->
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="categoria">Categoria*:</label>
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input class="form-control" name="nombre" id="categoria" type="text" placeholder="Nombre de la Categoria" pattern="[A-Za-z]+" title="Solo Letras" required>
+                                </div>
+                                <small>Formato: [A-Za-z]</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Agregar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# Horizontal Layout -->
+{% endblock content %}
+
+{% block js %}
+{% endblock js %}
+    

@@ -1,0 +1,153 @@
+{% extends 'base-content.html' %}
+{% load static %}
+{% block title %}
+    Editar Producto
+{% endblock title %} 
+{% block css %}
+    <!-- Colorpicker Css -->
+    <link href="{% static 'plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css' %}" rel="stylesheet" />
+
+    <!-- Dropzone Css -->
+    <link href="{% static 'plugins/dropzone/dropzone.css' %}" rel="stylesheet">
+
+    <!-- Multi Select Css -->
+    <link href="{% static 'plugins/multi-select/css/multi-select.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Spinner Css -->
+    <link href="{% static 'plugins/jquery-spinner/css/bootstrap-spinner.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Tagsinput Css -->
+    <link href="{% static 'plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Select Css -->
+    <link href="{% static 'plugins/bootstrap-select/css/bootstrap-select.css' %}" rel="stylesheet" />
+
+    <!-- noUISlider Css -->
+    <link href="{% static 'plugins/nouislider/nouislider.min.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block content %}
+<div class="block-header">
+    <h2>EDITAR PRODUCTO O SERVICIO</h2>
+</div>
+<!-- Horizontal Layout -->
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Formulario de Producto o Servicio
+                </h2>
+            </div>
+            <div class="body">
+                {% if success %}
+                 <!-- Alerta -->
+                 <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Ya existe un producto o servicio con el nombre: <strong>{{ name_product }}</strong>, vuelve a intentarlo 
+                </div>
+                {% endif %}
+                <form method="post", enctype="multipart/form-data0">
+                    {% csrf_token %}
+                    
+                    <div class="row clearfix">
+                        <!-- Nombre -->
+                        <div class="col-md-6">
+                            <p>
+                                <b>Nombre del producto*:</b>
+                            </p>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input class="form-control" name="nombre" id="producto" type="text" placeholder="Nombre del producto o servicio" value="{{ productoservicio.nombre }}" required>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Precio -->
+                        <div class="col-md-6">
+                            <p>
+                                <b>Precio (Quetzales (Q))*:</b>
+                            </p>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input class="form-control" name="precio" id="cost" type='number' placeholder="Precio en Quetzales" min="0" value="{{ productoservicio.precio }}" onchange="setTwoNumberDecimal" step='0.01' value='0.00' required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+
+                    <div class="row clearfix">
+                        <div class="col-md-6">
+                            <p>
+                                <b>Categoria*:</b>
+                            </p>
+                            <select class="form-control show-tick" name="id_categoria" required>
+                                {% for categoria in categorias %}
+                                    {% if categoria.id == productoservicio.id_categoria.id %}
+                                    <option value="{{ categoria.id }}" selected>{{ categoria.nombre }}</option> 
+                                    {% else %}
+                                    <option value="{{ categoria.id }}">{{ categoria.nombre }}</option> 
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                <b>Pagina de ventas*:</b>
+                            </p>
+                            <select class="form-control show-tick" name="id_pagina_ventas" required>
+                                <option value="" selected="">Por favor seleccione una pagina de ventas</option>
+                                {% for paginaventa in paginaventas %}
+                                    {% if paginaventa.id == productoservicio.id_pagina_ventas.id %}
+                                    <option value="{{ paginaventa.id }}" selected>{{ paginaventa.nombre_sitio }}</option> 
+                                    {% else %}
+                                    <option value="{{ paginaventa.id }}">{{ paginaventa.nombre_sitio }}</option> 
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <!-- Precio -->
+                        <div class="col-md-6">
+                            <p>
+                                <b>Cantidad*:</b>
+                            </p>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input class="form-control" name="cantidad" id="quantity" type='number' placeholder="Cantidad" value="{{ productoservicio.cantidad }}"  min="0" step='1' required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                <b>Imagen:</b>
+                            </p>
+                            <input type="file" name="foto" accept="image/*" id="id_foto" value="{{ productoservicio.foto }}" >
+                        </div>
+                    </div>
+                    
+                    <center>
+                        <div class="row clearfix">
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Editar</button>
+                        </div>
+                    </center>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# Horizontal Layout -->
+{% endblock content %}
+
+{% block js %}
+
+
+<script>
+    function setTwoNumberDecimal(event) {
+        this.value = parseFloat(this.value).toFixed(2);
+    }
+</script>
+{% endblock js %}
+    

@@ -175,13 +175,14 @@
 
     <section class="content">
         <div class="container-fluid">
+            {% include 'messages.html' %}
             {% block content %}
 
             {% endblock content %}
            
         </div>
     </section>
-   <!-- Jquery Core Js -->
+    <!-- Jquery Core Js -->
     <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 
     <!-- Bootstrap Core Js -->
@@ -221,6 +222,8 @@
 
     <!-- Custom Js -->
     <script src="{% static 'js/admin.js' %}"></script>
+    {% block jstable %}
+    {% endblock jstable %}
     <script src="{% static 'js/pages/index.js' %}"></script>
 
     <!-- Demo Js -->
