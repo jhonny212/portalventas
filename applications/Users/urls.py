@@ -9,6 +9,11 @@ urlpatterns = [
         name='registrar-usuario'
     ),
     path(
+        'inicar-session/',
+        views.LoginFormView.as_view(),
+        name='iniciar-session'
+    ),
+    path(
         'perfil/',
         views.UsuarioView.as_view(),
         name='info-usuario'
@@ -22,5 +27,10 @@ urlpatterns = [
         'elimnar-perfil/',
         views.eliminar_perfil,
         name='elimnar-perfil'
+    ),
+    path(
+        'cerrar-sesion/',
+        views.Logout,
+        name='cerrar-sesion'
     ),
 ]

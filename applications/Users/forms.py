@@ -46,3 +46,19 @@ class UsuarioUpdateForm(UsuarioRegistroForm):
     class Meta(UsuarioRegistroForm.Meta):
         """Meta definition for usernameUpdateform."""
         exclude = ('username',)
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+        attrs={
+        'class': 'form-control',
+        'placeholder':'Usuario'
+    }))
+    password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(
+        attrs={
+        'class': 'form-control',
+        'placeholder':'Contraseña'
+    }))
