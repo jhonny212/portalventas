@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Iniciar Sesion
+{% endblock title %}
+
+
+{% block classname %}
+    class="login-page"
+{% endblock classname %}
+
+{% block content %}
+<div class="login-box">
+    <div class="logo">
+        <a href="javascript:void(0);"><b>Portal de ventas</b></a>
+        <small>El portal mas cool</small>
+    </div>
+    <div class="card">
+        <div class="body">
+            <form id="sign_in" method="POST">
+                {% csrf_token %}
+                <div class="msg">Iniciar Sesion</div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">person</i>
+                    </span>
+                    <div class="form-line">
+                        {{ form.username }}
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock</i>
+                    </span>
+                    <div class="form-line">
+                        {{ form.password }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
+                    </div>
+                </div>
+                <div class="row m-t-15 m-b--20">
+                    <div class="col-xs-6">
+                        <a href=" {% url 'users_app:registrar-usuario' %} ">Register Now!</a>
+                    </div>
+                    <div class="col-xs-6 align-right">
+                        <a href="forgot-password.html">Forgot Password?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>    
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/pages/examples/sign-in.js' %}"></script> 
+{% endblock js %}

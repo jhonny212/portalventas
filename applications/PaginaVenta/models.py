@@ -3,9 +3,10 @@ from django.conf import settings
 
 class PaginaVentas(models.Model):
     """Model definition for PaginaVentas."""
-    nombre_sitio = models.CharField("Sitio", max_length=50)
+    nombre_sitio = models.CharField("Sitio", max_length=50,unique=True)
     descripcion = models.CharField("Descripcion", max_length=50)
-
+    no_cuenta = models.IntegerField('Numero de cuenta', default=0,unique=True)
+    status = models.BooleanField(default=True)
     class Meta:
         """Meta definition for PaginaVentas."""
 
