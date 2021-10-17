@@ -1,0 +1,90 @@
+{% extends 'base-content.html' %}
+{% load static %}
+{% block css %}
+    <!-- JQuery DataTable Css -->
+    <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
+{% endblock css %}
+{% block title %}
+    Lista de categorias
+{% endblock title %} 
+
+{% block content %}
+<div class="block-header">
+    <h2>Lista de Categorias</h2>
+</div>
+<!-- Exportable Table -->
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+           
+            {% if exito %}
+            <!-- Alerta -->
+            <div class="alert bg-green alert-dismissible" role="alert">
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <strong>{{ mensaje_a }}</strong> 
+           </div>
+           {% endif %}
+           {% if error %}
+           <!-- Alerta -->
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>{{ mensaje_e }}</strong> 
+            </div>
+            {% endif %}
+            <div class="header">
+                <h2>
+                    Lista
+                </h2>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Accion</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for categoria in categorias %}
+                            <tr>
+                                <td>{{ categoria.nombre }}</td>
+                                <td style="text-align: center;">
+                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:editar-categorias' categoria.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
+                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:eliminar-categorias' categoria.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# Exportable Table -->
+{% endblock content %}
+{% block jstable %}
+    <script src="{% static 'js/pages/tables/jquery-datatable.js' %}"></script>
+{% endblock jstable %}
+{% block js %}
+    
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="{% static 'plugins/jquery-datatable/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/jszip.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/pdfmake.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
+
+    
+{% endblock js %}
