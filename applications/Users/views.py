@@ -53,16 +53,16 @@ def eliminar_perfil(request):
 class LoginFormView(FormView):
     template_name = 'Usuario/sign-in.html'
     form_class = forms.LoginForm
-    success_url = reverse_lazy('users_app:registrar-usuario')
+    success_url = reverse_lazy('users_app:main')
 
     def form_valid(self, form):
         user = authenticate(
             username=form.cleaned_data['username'],
             password=form.cleaned_data['password']
         )
-        print(form.cleaned_data)
-        print(user)
-        login(self.request,user)    
+        print('INIT LOGIN',user)
+        login(self.request,user)   
+        print("AFTER LOGIN") 
         return super(LoginFormView, self).form_valid(form)
 
 def Logout(request):

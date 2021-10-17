@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 from .models import Usuario
 
 class UsuarioRegistroForm(forms.ModelForm):
@@ -62,3 +63,10 @@ class LoginForm(forms.Form):
         'class': 'form-control',
         'placeholder':'Contraseña'
     }))
+
+    def clean_password(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        if not authenticate(username=username, password=password):
+            self.add_error('username','El usuario no existe')
+        return password
