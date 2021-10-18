@@ -9,4 +9,5 @@ urlpatterns = [
     re_path('',include('applications.Users.urls')),
     re_path('',include('applications.Producto.urls')),
     re_path('',include('applications.PaginaVenta.urls')),
+    re_path('',include('applications.Proveedor.urls')),
 ]

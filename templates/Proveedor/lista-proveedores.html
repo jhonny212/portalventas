@@ -41,23 +41,29 @@
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                         <thead>
                             <tr>
-                                <th>Categoria</th>
+                                <th>Nombre</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
                                 <th>Accion</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Categoria</th>
+                                <th>Nombre</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
                                 <th>Accion</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            {% for categoria in categorias %}
+                            {% for proveedor in proveedores %}
                             <tr>
-                                <td>{{ categoria.nombre }}</td>
+                                <td>{{ proveedor.proveedor }}</td>
+                                <td>{{ proveedor.direccion }}</td>
+                                <td>{{ proveedor.telefono }}</td>
                                 <td style="text-align: center;">
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:editar-categorias' categoria.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:eliminar-categorias' categoria.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
+                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'proveedor_app:editar-proveedor' proveedor.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
+                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'proveedor_app:eliminar-proveedor' proveedor.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
                                 </td>
                             </tr>
                             {% endfor %}

@@ -1,7 +1,7 @@
 {% extends 'base-content.html' %}
 {% load static %}
 {% block title %}
-    Crear Categoria
+    Crear Producto
 {% endblock title %} 
 {% block css %}
     <!-- Colorpicker Css -->
@@ -123,6 +123,7 @@
                     <center>
                         <div class="row clearfix">
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Agregar</button>
+                            <a type="button" class="btn btn-secondary m-t-15 waves-effect" href="{% url 'products_app:lista-productos' %}">Cancelar</a>
                         </div>
                     </center>
                     
