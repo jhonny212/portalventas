@@ -1,12 +1,19 @@
+from django.db.models.base import Model
 from django.shortcuts import redirect, render
 from django.contrib import messages
-
+from django.views.generic import CreateView
 from applications.PaginaVenta.models import PaginaVentas
 from .models import Categoria, ProductoServicio
 from .forms import CategoryForm, ProductServicioForm
 from django.contrib import messages
 
 # Create your views here.
+
+class Prueba(CreateView):
+    model = ProductoServicio
+    success_url = "."
+    template_name = "Producto/crear-producto.html"
+    fields = "__all__"
 
 def crear_categoria(request):
     exist = False
@@ -179,7 +186,8 @@ def editar_producto(request, id):
         producto_editar.nombre = request.POST.get('nombre')
         producto_editar.precio = float(request.POST.get('precio'))
         producto_editar.cantidad = int(request.POST.get('cantidad'))
-        producto_editar.foto = request.POST.get('foto')
+        print(request.POST.get('foto'))
+        producto_editar.foto = "Portada/" + request.POST.get('foto')
         producto_editar.id_categoria = Categoria.objects.get(id=int(request.POST.get('id_categoria')))
         producto_editar.id_pagina_ventas = PaginaVentas.objects.get(id=int(request.POST.get('id_pagina_ventas')))
         producto_editar.save()

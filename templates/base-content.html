@@ -150,6 +150,57 @@
                                 
                         </ul>
                     </li>
+                    <!-- Vista de administrador -->
+                    {% if user.rol == '0' %}
+                    <!-- Categorias -->
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">pages</i>
+                            <span>Categorias</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{% url 'products_app:crear-categorias' %}">Añadir categoria</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'products_app:lista-categorias' %}">Lista de categorias</a>
+                            </li>                            
+                        </ul>
+                    </li>
+                    <!-- Productos -->
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">lock</i>
+                            <span>Productos</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{% url 'products_app:crear-producto' %}">Añadir producto</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'products_app:lista-productos' %}">Lista de productos</a>
+                            </li>                            
+                        </ul>
+                    </li>
+                    <!-- Proveedor -->
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">group</i>
+                            <span>Proveedores</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="#">Añadir proveedor</a>
+                            </li>
+                            <li>
+                                <a href="#">Lista de proveedores</a>
+                            </li>                            
+                        </ul>
+                    </li>
+
+                    {% endif %}
+
+                    
 
                 </ul>
             </div>
@@ -157,7 +208,7 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2016 - 2017 <a href="javascript:void(0);">Portal de ventas</a>.
+                    &copy; 2021 <a href="javascript:void(0);">Portal de ventas</a>.
                 </div>
                 <div class="version">
                     <b>Version: </b> 1.0.5

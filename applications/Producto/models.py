@@ -24,9 +24,10 @@ class ProductoServicio(models.Model):
     id_categoria = models.ForeignKey(
         Categoria,
         related_name='producto_categoria',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True
     )
-    id_pagina_ventas = models.ForeignKey(PaginaVentas, on_delete=models.CASCADE)
+    id_pagina_ventas = models.ForeignKey(PaginaVentas, on_delete=models.CASCADE, null=True)
     foto = models.ImageField(upload_to='Portada', null =True,blank= True)
 
     class Meta:
