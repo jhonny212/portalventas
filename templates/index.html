@@ -1,0 +1,77 @@
+{% extends 'base-content.html' %}
+{% load static %}
+{% block title %}
+    Inicio
+{% endblock title %} 
+
+    
+
+{% block content %}
+{% for producto in productos %}
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    {{ producto.0 }}
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);">Añadir a carrito</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#home_with_icon_title{{ producto.5 }}" data-toggle="tab">
+                            <i class="material-icons">image</i> Producto
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#profile_with_icon_title{{ producto.5 }}" data-toggle="tab">
+                            <i class="material-icons">short_text</i> Descripcion
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#messages_with_icon_title{{ producto.5 }}" data-toggle="tab">
+                            <i class="material-icons">details</i> Detalles
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home_with_icon_title{{ producto.5 }}">
+                        <img src="http://localhost:8000/media/{{ producto.1 }}" class="img-responsive" alt="None">
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="profile_with_icon_title{{ producto.5 }}">
+                        <b>Descripcion</b>
+                        <p>
+                           {{ producto.4 }}
+                        </p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="messages_with_icon_title{{ producto.5 }}">
+                        <b>Detalles</b>
+                        <p>
+                            <ul>
+                                <li>Precio: {{ producto.2 }}</li>
+                                <li>En Existencia: {{ producto.3 }}</li>
+                                <li>Sitio: {{ producto.6 }}</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+    
+{% endblock content %}

@@ -1,5 +1,6 @@
 from django.db import models
 from applications.PaginaVenta.models import PaginaVentas
+from . import managers
 
 class Categoria(models.Model):
     """Model definition for Categoria."""
@@ -25,11 +26,17 @@ class ProductoServicio(models.Model):
         Categoria,
         related_name='producto_categoria',
         on_delete=models.CASCADE,
-        null=True
+        null =True
     )
-    id_pagina_ventas = models.ForeignKey(PaginaVentas, on_delete=models.CASCADE, null=True)
+    id_pagina_ventas = models.ForeignKey(
+        PaginaVentas, 
+        on_delete=models.CASCADE,
+        related_name='id_pagina_ventas',
+        null =True
+    )
     foto = models.ImageField(upload_to='Portada', null =True,blank= True)
-
+    objects = managers.ProductoServicioManager()
+    descripcion = models.TextField(null=True, blank=True)
     class Meta:
         """Meta definition for ProductoServicio."""
 
