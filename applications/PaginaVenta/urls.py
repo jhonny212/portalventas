@@ -18,4 +18,9 @@ urlpatterns = [
         views.PaginaVentasListView.as_view(),
         name='listar-sitios-venta'
     ),
+    path(
+        'productos-sitio/<id>/',
+        views.ProductosPaginaVentaListView.as_view(),
+        name='productos-sitio'
+    ),
 ]
