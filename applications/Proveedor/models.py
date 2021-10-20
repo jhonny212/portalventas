@@ -5,7 +5,7 @@ class Proveedor(models.Model):
     """Model definition for Proveedor."""
     proveedor = models.CharField("Nombre proveedor", max_length=50)
     telefono = models.IntegerField()
-    
+    direccion = models.CharField(max_length=200)
     class Meta:
         """Meta definition for Proveedor."""
 
