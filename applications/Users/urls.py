@@ -4,7 +4,6 @@ from django.views.generic import TemplateView
 
 app_name = 'users_app'
 urlpatterns = [
-    path('main/', TemplateView.as_view(template_name='index.html'),name='main'),
     path(
         'registrar-usuario/',
         views.UserCreateView.as_view(),

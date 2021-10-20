@@ -7,28 +7,35 @@ from django.views.generic import (
 from django.contrib.auth import login,logout,authenticate
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Usuario
 from . import forms
+from applications.PaginaVenta.models import Suscripciones
 
 
 class UserCreateView(FormView):
     model = Usuario
     template_name = "Usuario/sign-up.html"
     form_class = forms.UsuarioRegistroForm
-    success_url = reverse_lazy('users_app:registrar-usuario')
+    success_url = reverse_lazy('users_app:iniciar-session')
 
     def form_valid(self, form) :
         Usuario.objects.create_user(
             form.cleaned_data['nombre'],
             form.cleaned_data['username'],
-            '0',
+            '1',
             form.cleaned_data['password']
         )
         return super(UserCreateView,self ).form_valid(form) 
 
-class UsuarioView(TemplateView):
+class UsuarioView(LoginRequiredMixin,TemplateView):
     template_name = "Usuario/profile.html"
+    login_url = reverse_lazy('users_app:iniciar-session')
+    
+    def get_context_data(self, **kwargs):
+        context = super(UsuarioView, self).get_context_data(**kwargs)
+        context["suscripciones"]=Suscripciones.objects.get_suscripciones(self.request.user.id)
+        return context
 
 
 def actualizar_perfil(request):
@@ -53,16 +60,14 @@ def eliminar_perfil(request):
 class LoginFormView(FormView):
     template_name = 'Usuario/sign-in.html'
     form_class = forms.LoginForm
-    success_url = reverse_lazy('users_app:main')
+    success_url = reverse_lazy('main_app:main')
 
     def form_valid(self, form):
         user = authenticate(
             username=form.cleaned_data['username'],
             password=form.cleaned_data['password']
         )
-        print('INIT LOGIN',user)
         login(self.request,user)   
-        print("AFTER LOGIN") 
         return super(LoginFormView, self).form_valid(form)
 
 def Logout(request):

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from . import managers
 
 class PaginaVentas(models.Model):
     """Model definition for PaginaVentas."""
@@ -22,12 +23,14 @@ class Suscripciones(models.Model):
     id_pagina_ventas = models.ForeignKey(
         PaginaVentas, 
         on_delete=models.CASCADE,
+        related_name='suscripciones_pagina_venta'
     )
     usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE,
+        related_name='usuario_pagina_venta'
      )
-
+    objects = managers.SuscripcionesManager()
     class Meta:
         """Meta definition for Suscripciones."""
 
@@ -36,5 +39,4 @@ class Suscripciones(models.Model):
         unique_together = [['id_pagina_ventas', 'usuario']]
 
     def __str__(self):
-        """Unicode representation of Suscripciones."""
-        pass
+        return self.id_pagina_ventas.nombre_sitio

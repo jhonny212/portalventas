@@ -72,7 +72,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">PORTAL DE VENTAS</a>
+                <a class="navbar-brand" href="index.html">PORTAL DE VENTAS </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -140,17 +140,36 @@
                                     <a href="{% url 'PaginaVenta_app:listar-sitios-venta' %}">Ver sitios</a>
                                 </li>
                             {% else %}
-                            <li class="active">
-                                <a href="index.html">
-                                    <i class="material-icons">search</i>
-                                    <span>Buscar sitios</span>
-                                </a>
-                            </li>
+                            
+                            {% for suscripcion in suscripciones %}
+                                <li class="active">
+                                    <a href="{% url 'PaginaVenta_app:productos-sitio' suscripcion.id_pagina_ventas.id %}">
+                                        <i class="material-icons">pageview</i>
+                                        <span>{{ suscripcion }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                                
                             {% endif %}
                                 
                         </ul>
                     </li>
-
+                    {% if user.rol == '1'%}
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">search</i>
+                            <span>Buscar sitios</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li class="active">
+                                <form action="" method="get">
+                                    <input type="text" class="form-control" name="kword">
+                                    <input type="submit" value="Buscar sitios" class="btn btn-default">
+                                </form>
+                            </li>
+                       </ul>
+                    </li>                    
+                    {% endif %}
                 </ul>
             </div>
             <!-- #Menu -->

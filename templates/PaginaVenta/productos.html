@@ -1,11 +1,9 @@
 {% extends 'base-content.html' %}
 {% load static %}
+
 {% block title %}
-    Inicio
-{% endblock title %} 
-
-    
-
+    Productos de sitio
+{% endblock title %}
 {% block content %}
 {% for producto in productos %}
 <div class="row clearfix">
@@ -13,7 +11,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    {{ producto.0 }}
+                    {{ producto.nombre }}
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -30,17 +28,17 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
-                        <a href="#home_with_icon_title{{ producto.5 }}" data-toggle="tab">
+                        <a href="#home_with_icon_title{{ producto.id }}" data-toggle="tab">
                             <i class="material-icons">image</i> Producto
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#profile_with_icon_title{{ producto.5 }}" data-toggle="tab">
+                        <a href="#profile_with_icon_title{{ producto.id }}" data-toggle="tab">
                             <i class="material-icons">short_text</i> Descripcion
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#messages_with_icon_title{{ producto.5 }}" data-toggle="tab">
+                        <a href="#messages_with_icon_title{{ producto.id }}" data-toggle="tab">
                             <i class="material-icons">details</i> Detalles
                         </a>
                     </li>
@@ -48,22 +46,21 @@
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="home_with_icon_title{{ producto.5 }}">
-                        <img src="http://localhost:8000/media/{{ producto.1 }}" class="img-responsive" alt="None">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home_with_icon_title{{ producto.id }}">
+                        <img src="http://localhost:8000/media/{{ producto.foto }}" class="img-responsive" alt="None">
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="profile_with_icon_title{{ producto.5 }}">
+                    <div role="tabpanel" class="tab-pane fade" id="profile_with_icon_title{{ producto.id }}">
                         <b>Descripcion</b>
                         <p>
-                           {{ producto.4 }}
+                           {{ producto.descripcion }}
                         </p>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="messages_with_icon_title{{ producto.5 }}">
+                    <div role="tabpanel" class="tab-pane fade" id="messages_with_icon_title{{ producto.id }}">
                         <b>Detalles</b>
                         <p>
                             <ul>
-                                <li>Precio: {{ producto.2 }}</li>
-                                <li>En Existencia: {{ producto.3 }}</li>
-                                <li>Sitio: {{ producto.6 }}</li>
+                                <li>Precio: {{ producto.precio }}</li>
+                                <li>En Existencia: {{ producto.cantidad }}</li>
                             </ul>
                         </p>
                     </div>
@@ -73,5 +70,4 @@
     </div>
 </div>
 {% endfor %}
-    
 {% endblock content %}
