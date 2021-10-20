@@ -20,10 +20,12 @@ class AsignacionProveedor(models.Model):
     id_proveedor = models.ForeignKey(
         Proveedor, 
         on_delete=models.CASCADE,
+        related_name='Supplier_Product',
     )
     id_producto = models.ForeignKey(
         ProductoServicio, 
         on_delete=models.CASCADE,
+        related_name='Product_Supplier',
     )
 
     class Meta:

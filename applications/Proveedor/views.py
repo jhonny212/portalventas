@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.db.models.base import Model
 from .models import Proveedor, AsignacionProveedor
@@ -112,3 +113,48 @@ def editar_proveedor(request, id):
             request.session['mensaje_a'] = "Se edito con exito el proveedor " + name + ", con los datos ingresados."
             return redirect('proveedor_app:lista-proveedor')
     return render(request, "Proveedor/editar-proveedor.html", context)
+
+def enlazar_proveedor(request, id):
+    producto = ProductoServicio.objects.get(id=id)
+    producto_proveedor = Proveedor.objects.filter(Supplier_Product__id_producto=id)
+    otros_proveedores = Proveedor.objects.exclude(id__in = producto_proveedor.values('id'))
+    aux = 1
+    if request.method == 'GET':
+        form = AsignacionProveedorForm(otros_proveedores = otros_proveedores, id_producto = id, aux = aux)
+    else:
+        form = AsignacionProveedorForm(data=request.POST, otros_proveedores = otros_proveedores, id_producto = id, aux = aux)
+        if form.is_valid():
+            form.save()
+            request.session['exito'] = True
+            request.session['mensaje_a'] = "Se enlazo correctamente"
+            return redirect('proveedor_app:enlazar-proveedor', id=id)
+        else: 
+            print ('Error')
+    try:
+        exito = request.session['exito']
+        context = {
+            'producto':producto,
+            'producto_proveedores':producto_proveedor,
+            'form':form,
+            'exito':exito,
+            'mensaje_a':request.session['mensaje_a']
+        }
+        del request.session['exito']
+        del request.session['mensaje_a']
+        return render(request, "Producto/enlazar-proveedor.html", context)
+    except:
+        print('No es de exito')
+    context = {
+        'producto':producto,
+        'producto_proveedores':producto_proveedor,
+        'form':form,
+    }
+    return render(request, "Producto/enlazar-proveedor.html", context)
+
+def eliminar_enlace(request,id,id2):
+    productsupplier=AsignacionProveedor.objects.filter(id_proveedor=id,id_producto=id2)
+    if(productsupplier):
+        productsupplier.delete()
+        request.session['exito'] = True
+        request.session['mensaje_a'] = "Se elimino correctamente"
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

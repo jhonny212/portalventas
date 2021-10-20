@@ -72,6 +72,7 @@
                                 <td style="text-align: center;">
                                     <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:editar-producto' producto.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
                                     <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:eliminar-productos' producto.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
+                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'proveedor_app:enlazar-proveedor' producto.id %}" title="Enlazar Proveedores" ><i class="material-icons">link</i></a></small> 
                                 </td>
                             </tr>
                             {% endfor %}

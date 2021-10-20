@@ -23,4 +23,14 @@ urlpatterns = [
         views.editar_proveedor,
         name='editar-proveedor'
     ),
+    path(   
+        'enlazar-proveedor/<int:id>',
+        views.enlazar_proveedor,
+        name='enlazar-proveedor'
+    ),
+    path(
+        'eliminar-enlace/<int:id>/<int:id2>',
+        views.eliminar_enlace,
+        name='eliminar-enlace'
+    ),
 ]
