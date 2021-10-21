@@ -1,19 +1,27 @@
 from django.db.models.base import Model
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from applications.PaginaVenta.models import PaginaVentas
 from .models import Categoria, ProductoServicio
 from .forms import CategoryForm, ProductServicioForm
 from django.contrib import messages
+from django.urls import reverse_lazy
 
 # Create your views here.
 
-class Prueba(CreateView):
+class CrearProducto(CreateView):
     model = ProductoServicio
-    success_url = "."
+    success_url = reverse_lazy('products_app:lista-productos')
+    form_class = ProductServicioForm
     template_name = "Producto/crear-producto.html"
-    fields = "__all__"
+
+
+class EditarProducto(UpdateView):
+    model = ProductoServicio
+    success_url = reverse_lazy('products_app:lista-productos')
+    form_class = ProductServicioForm
+    template_name = "Producto/editar-producto.html"
 
 def crear_categoria(request):
     exist = False
@@ -142,22 +150,6 @@ def lista_productos(request):
         print('No es de error')
     return render(request, "Producto/lista-productos.html", context)
 
-def crear_producto(request):
-    categorias = Categoria.objects.all()
-    paginaventas = PaginaVentas.objects.all()
-    context = {
-        'categorias':categorias,
-        'paginaventas':paginaventas
-    }
-    if request.method == 'POST':
-        producto = ProductServicioForm(request.POST)
-        print(producto)
-        if producto.is_valid():
-            producto.save()
-            request.session['exito'] = True
-            request.session['mensaje_a'] = "Se agrego con exito el producto " + request.POST.get('nombre')
-            return redirect('products_app:lista-productos')
-    return render(request, "Producto/crear-producto.html", context)
 
 def eliminar_producto(request, id):
     try: 
@@ -171,27 +163,3 @@ def eliminar_producto(request, id):
     request.session['exito'] = True
     request.session['mensaje_a'] = "Se elimino con exito el producto " + name
     return redirect('products_app:lista-productos')
-
-def editar_producto(request, id):
-    producto_editar = ProductoServicio.objects.get(id = id)
-    categorias = Categoria.objects.all()
-    paginaventas = PaginaVentas.objects.all()
-    if request.method == 'GET':
-        context = {
-            'productoservicio':producto_editar,
-            'categorias':categorias,
-            'paginaventas':paginaventas
-            }
-    else :
-        producto_editar.nombre = request.POST.get('nombre')
-        producto_editar.precio = float(request.POST.get('precio'))
-        producto_editar.cantidad = int(request.POST.get('cantidad'))
-        print(request.POST.get('foto'))
-        producto_editar.foto = "Portada/" + request.POST.get('foto')
-        producto_editar.id_categoria = Categoria.objects.get(id=int(request.POST.get('id_categoria')))
-        producto_editar.id_pagina_ventas = PaginaVentas.objects.get(id=int(request.POST.get('id_pagina_ventas')))
-        producto_editar.save()
-        request.session['exito'] = True
-        request.session['mensaje_a'] = "Se edito con exito el producto!"
-        return redirect('products_app:lista-productos')
-    return render(request, "Producto/editar-producto.html", context)
