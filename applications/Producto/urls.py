@@ -43,4 +43,9 @@ urlpatterns = [
         views.CrearProducto.as_view(),
         name='crear-producto'
     ),
+    path(
+        'reporte-producto/',
+        views.reporte_producto_servicio,
+        name='reporte-producto'
+    ),
 ]

@@ -1,4 +1,5 @@
 from django.db.models.base import Model
+from django.http import request
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views.generic import CreateView, UpdateView
@@ -168,3 +169,6 @@ def eliminar_producto(request, id):
     request.session['exito'] = True
     request.session['mensaje_a'] = "Se elimino con exito el producto " + name
     return redirect('products_app:lista-productos')
+
+def reporte_producto_servicio(request):
+    return render(request, "Reportes/reporte-productos.html")
