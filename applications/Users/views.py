@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
-    CreateView,UpdateView,
-    DeleteView,TemplateView
+    TemplateView
 )
 from django.contrib.auth import login,logout,authenticate
 from django.views.generic.edit import FormView
@@ -11,7 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Usuario
 from . import forms
 from applications.PaginaVenta.models import Suscripciones
-
+from applications.Compra.models import Compra,Detalle
+from applications.Compra import functions
 
 class UserCreateView(FormView):
     model = Usuario
@@ -43,11 +43,13 @@ def actualizar_perfil(request):
     last_name = request.POST['last_name']
     email = request.POST['email']
     about_me = request.POST['about_me']
+    no_cuenta = request.POST['no_cuenta']
     bool = Usuario.objects.filter(id=request.user.id).update(
         nombre=nombre,
         last_name=last_name,
         email=email,
         about_me=about_me,
+        no_cuenta=no_cuenta,
     )
     return HttpResponseRedirect(reverse_lazy('users_app:info-usuario'))
 
@@ -71,5 +73,16 @@ class LoginFormView(FormView):
         return super(LoginFormView, self).form_valid(form)
 
 def Logout(request):
+    compra = 'compra' in request.session
+    if compra:
+        compra = Compra.objects.filter(id=request.session['compra']).first()
+        compra.estado = '2'
+        details = Detalle.objects.filter(id_compra=compra.id)
+        if details:
+            for d in details:
+                functions.eliminar_detalle(d.id, d.id_producto.id,False)
+            details.delete()
+        request.session['compra']=None
+        compra.save()
     logout(request)
     return HttpResponseRedirect(reverse_lazy('users_app:iniciar-session'))

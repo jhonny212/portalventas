@@ -10,10 +10,11 @@ class ProductoServicioManager(models.Manager):
         from "Producto_productoservicio" as p INNER JOIN "PaginaVenta_paginaventas" as pv
         ON p.id_pagina_ventas_id = pv.id
         INNER JOIN "PaginaVenta_suscripciones" as ps ON ps.id_pagina_ventas_id = pv.id
-        where ps.usuario_id=%s and pv.nombre_sitio LIKE %s 
-        """ 
+        where ps.usuario_id=%s and p.nombre LIKE %s 
+        """
+        x=[user_id,f"%{site}%"]
         with connection.cursor() as cursor:
-            cursor.execute(sql,[user_id,f"%{site}%"])
+            cursor.execute(sql,x)
             row = cursor.fetchall()
         return row
     
@@ -22,6 +23,4 @@ class ProductoServicioManager(models.Manager):
         x = self.filter(
             id_pagina_ventas__id=id
         )
-        print(x.query)
-        print(x)
         return x   

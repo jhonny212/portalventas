@@ -46,7 +46,7 @@
                     Ya existe un producto o servicio con el nombre: <strong>{{ name_product }}</strong>, vuelve a intentarlo 
                 </div>
                 {% endif %}
-                <form method="post", enctype="multipart/form-data0">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     
                     <div class="row clearfix">

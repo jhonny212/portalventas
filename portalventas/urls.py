@@ -10,4 +10,5 @@ urlpatterns = [
     re_path('',include('applications.PaginaVenta.urls')),
     re_path('',include('applications.Proveedor.urls')),
     re_path('',include('applications.main.urls')),
+    re_path('',include('applications.Compra.urls'))
 ]
