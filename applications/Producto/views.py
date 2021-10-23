@@ -16,6 +16,11 @@ class CrearProducto(CreateView):
     form_class = ProductServicioForm
     template_name = "Producto/crear-producto.html"
 
+    def get_context_data(self,*args, **kwargs): 
+        context = super(CrearProducto, self).get_context_data(*args,**kwargs) 
+        context['exito'] = True
+        context['mensaje_a'] = "Se agrego el producto con exito" 
+        return context
 
 class EditarProducto(UpdateView):
     model = ProductoServicio
