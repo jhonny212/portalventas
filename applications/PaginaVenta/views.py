@@ -29,6 +29,11 @@ class PaginaVentasListView(LoginRequiredMixin,ListView):
     context_object_name = 'sitios'
     login_url = reverse_lazy('users_app:iniciar-session')
 
+    def get_context_data(self, **kwargs):
+        context = super(PaginaVentasListView, self).get_context_data(**kwargs)
+        context["suscripciones"]=Suscripciones.objects.get_suscripciones(self.request.user.id)
+        return context
+
 class ProductosPaginaVentaListView(LoginRequiredMixin,ListView):
     model = ProductoServicio
     template_name = "PaginaVenta/productos.html"

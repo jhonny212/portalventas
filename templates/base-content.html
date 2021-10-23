@@ -105,9 +105,8 @@
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{% url 'users_app:info-usuario'%}"><i class="material-icons">person</i>Perfil</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+                            <li><a href="{% url 'compra_app:ver-carrito' %}"><i class="material-icons">shopping_cart</i>Carrito de compras</a></li>
+                            <li><a href="{% url 'compra_app:cancelar-carrito' %}"><i class="material-icons">shopping_cart</i>Cancelar carrito de compras</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{% url 'users_app:cerrar-sesion' %} "><i class="material-icons">input</i>Cerrar Sesion</a></li>
                         </ul>
@@ -121,9 +120,9 @@
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="{% url 'main_app:main' %}">
                             <i class="material-icons">home</i>
-                            <span>Home</span>
+                            <span>Homes</span>
                         </a>
                     </li>
                     <li>
@@ -140,7 +139,9 @@
                                     <a href="{% url 'PaginaVenta_app:listar-sitios-venta' %}">Ver sitios</a>
                                 </li>
                             {% else %}
-                            
+                            <li>
+                                <a href="{% url 'PaginaVenta_app:listar-sitios-venta' %}">Ver sitios</a>
+                            </li>
                             {% for suscripcion in suscripciones %}
                                 <li class="active">
                                     <a href="{% url 'PaginaVenta_app:productos-sitio' suscripcion.id_pagina_ventas.id %}">
@@ -159,13 +160,13 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">search</i>
-                            <span>Buscar sitios</span>
+                            <span>Buscar Producto</span>
                         </a>
                         <ul class="ml-menu">
                             <li class="active">
                                 <form action="" method="get">
                                     <input type="text" class="form-control" name="kword">
-                                    <input type="submit" value="Buscar sitios" class="btn btn-default">
+                                    <input type="submit" value="Buscar Producto" class="btn btn-default">
                                 </form>
                             </li>
                        </ul>
@@ -247,6 +248,18 @@
     <section class="content">
         <div class="container-fluid">
             {% include 'messages.html' %}
+            {% if request.GET.mensaje %}
+            <!-- Alerta -->
+            <script>
+                alert('{{ request.GET.mensaje }}')
+            </script>
+           {% endif %}
+           {% if request.GET.error %}
+           <!-- Alerta -->
+            <script>
+                alert('{{ request.GET.error }}')
+            </script>  
+            {% endif %}
             {% block content %}
 
             {% endblock content %}
