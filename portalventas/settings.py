@@ -98,10 +98,9 @@ DATABASES = {
 }
 """
 import dj_database_url
-from decouple import config
 DATABASES = {
     'default': dj_database_url.config(
-        default= config('DATABASE_URL')
+        default= "postgres://puynxkltrvddtj:fb9d73f4703c615c87940db42985f6ec00dc5153ba8406a781e2efd6d123ac8e@ec2-54-158-232-223.compute-1.amazonaws.com:5432/ddh73eoodjei41"
     )
 }
 
