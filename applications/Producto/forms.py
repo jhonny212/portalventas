@@ -11,7 +11,7 @@ class CategoryForm(forms.ModelForm):
 class ProductServicioForm(forms.ModelForm):
     class Meta:
         model = ProductoServicio
-        fields = '__all__'
+        fields = ('nombre', 'precio', 'id_categoria', 'id_pagina_ventas', 'descripcion', 'foto')
         widgets = {
             'nombre':forms.TextInput(attrs={
                 'class': 'form-control',
@@ -32,16 +32,6 @@ class ProductServicioForm(forms.ModelForm):
             }),
             'id_pagina_ventas':forms.Select(attrs={
               'class': 'form-control show-tick',  
-            }),
-            'cantidad':forms.NumberInput(attrs={
-              'class': 'form-control',
-              'type': 'number',
-              'placeholder': 'Cantidad',
-              'min':'0',
-              'onchange':'setTwoNumberDecimal',
-              'step':'1',
-              'value':'0',
-              'required':'False'
             }),
             'descripcion':forms.Textarea(attrs={
               'class': 'form-control',

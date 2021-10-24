@@ -37,7 +37,23 @@
                 </h2>
             </div>
             <div class="body">
-                
+                <div class="row clearfix">
+                    <div class="col-xs-3">
+                        <form>
+                            <h2 class="card-inside-title">Fecha</h2>
+                            <div class="input-daterange input-group" id="bs_datepicker_range_container">
+                                <div class="form-line">
+                                    <input type="date" class="form-control" placeholder="Date start..." required>
+                                </div>
+                                <span class="input-group-addon"></span>
+                                <div>
+                                    <small style="font-size: 1.5em; padding-right: 0.25em;"><button type="submit"  class="btn btn-primary m-t-15 waves-effect" title="Buscar" ><i class="material-icons">search</i></a></small>   
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
                 <!-- Table -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
@@ -47,8 +63,8 @@
                                 <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Pagina de ventas</th>
-                                <th>Proveedor</th>
                                 <th>Cantidad</th>
+                                <th>Precio</th>
                                 <th> </th>
                             </tr>
                         </thead>
@@ -58,20 +74,20 @@
                                 <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Pagina de ventas</th>
-                                <th>Proveedor</th>
                                 <th>Cantidad</th>
+                                <th>Precio</th>
                                 <th> </th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            {% for lote in lotes %}
+                            {% for producto in productos %}
                             <tr>
-                                <td>{{ lote.producto.id }}</td>
-                                <td>{{ lote.producto.nombre }}</td>
-                                <td>{{ lote.producto.id_categoria.nombre }}</td>
-                                <td>{{ lote.producto.id_pagina_ventas.nombre_sitio }}</td>
-                                <td>{{ lote.producto.cantidad }}</td>
-                                <td>{{ lote.producto.precio }}</td>
+                                <td>{{ producto.id }}</td>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.id_categoria.nombre }}</td>
+                                <td>{{ producto.id_pagina_ventas.nombre_sitio }}</td>
+                                <td>{{ producto.cantidad }}</td>
+                                <td>{{ producto.precio }}</td>
                                 <td style="text-align: center;">
                                     <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:abastecer' producto.id %}" title="Lotes" ><i class="material-icons">assignment</i></a></small>   
                                 </td>

@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.views.generic import CreateView, UpdateView
 from applications.PaginaVenta.models import PaginaVentas
 from applications.Proveedor.forms import AsignacionProveedorForm, LoteForm
-from applications.Proveedor.models import Proveedor
+from applications.Proveedor.models import LoteProducto, Proveedor
 from .models import Categoria, ProductoServicio
 from .forms import CategoryForm, ProductServicioForm
 from django.contrib import messages
@@ -167,7 +167,8 @@ def eliminar_producto(request, id):
     return redirect('products_app:lista-productos')
 
 def reporte_producto_servicio(request):
-    return render(request, "Reportes/reporte-productos.html")
+    context ={'productos':ProductoServicio.objects.all()}
+    return render(request, "Reportes/reporte-productos.html", context)
 
 def abastecer(request,id):
     producto = ProductoServicio.objects.get(id=id)
@@ -191,7 +192,6 @@ def abastecer(request,id):
         exito = request.session['exito']
         context = {
             'producto':producto,
-            'producto_proveedores':producto_proveedor,
             'form':form,
             'exito':exito,
             'mensaje_a':request.session['mensaje_a']
@@ -203,7 +203,6 @@ def abastecer(request,id):
         print('No es de exito')
     context = {
         'producto':producto,
-        'producto_proveedores':producto_proveedor,
         'form':form,
     }
     return render(request, "Producto/abastecer.html", context)
