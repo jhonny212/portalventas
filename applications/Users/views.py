@@ -86,3 +86,7 @@ def Logout(request):
         compra.save()
     logout(request)
     return HttpResponseRedirect(reverse_lazy('users_app:iniciar-session'))
+
+def reporte_usuarios(request):
+    context = {'usuarios':Usuario.objects.all()}
+    return render(request,"Reportes/reporte-usuarios.html", context)
