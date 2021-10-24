@@ -1,1 +1,1 @@
-web: gunicorn.portalventas.wsgi --log-file -
+web: gunicorn portalventas.wsgi --log-file -
