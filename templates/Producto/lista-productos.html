@@ -52,7 +52,6 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Pagina de ventas</th>
@@ -71,7 +70,6 @@
                                 <td>{{ producto.cantidad }}</td>
                                 <td>{{ producto.precio }}</td>
                                 <td style="text-align: center;">
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:abastecer' producto.id %}" title="Abastecer" ><i class="material-icons">library_add</i></a></small>   
                                     <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:editar-producto' producto.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
                                     <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:eliminar-productos' producto.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
                                     <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'proveedor_app:enlazar-proveedor' producto.id %}" title="Enlazar Proveedores" ><i class="material-icons">link</i></a></small> 

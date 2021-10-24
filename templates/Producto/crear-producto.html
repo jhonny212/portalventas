@@ -57,7 +57,7 @@
                             </p>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {{ form.nombre }}
+                                    <input class="form-control" name="nombre" id="producto" type="text" placeholder="Nombre del producto o servicio" required>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             </p>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {{  form.precio }}
+                                    <input class="form-control" name="precio" id="cost" type='number' placeholder="Precio en Quetzales" min="0" onchange="setTwoNumberDecimal" step='0.01' value='0.00' required>
                                 </div>
                             </div>
                         </div>
@@ -80,13 +80,23 @@
                             <p>
                                 <b>Categoria*:</b>
                             </p>
-                            {{ form.id_categoria }}
+                            <select class="form-control show-tick" name="id_categoria" required>
+                                <option value="" selected="">Por favor seleccione una categoria</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria.id }}">{{ categoria.nombre }}</option> 
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <p>
                                 <b>Pagina de ventas*:</b>
                             </p>
-                            {{ form.id_pagina_ventas }}
+                            <select class="form-control show-tick" name="id_pagina_ventas" required>
+                                <option value="" selected="">Por favor seleccione una pagina de ventas</option>
+                                {% for paginaventa in paginaventas %}
+                                    <option value="{{ paginaventa.id }}">{{ paginaventa.nombre_sitio }}</option> 
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
 
@@ -94,11 +104,11 @@
                         <!-- Precio -->
                         <div class="col-md-6">
                             <p>
-                                <b>Descripcion:</b>
+                                <b>Cantidad*:</b>
                             </p>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {{ form.descripcion }}
+                                    <input class="form-control" name="cantidad" id="quantity" type='number' placeholder="Cantidad" value='0' min="0" step='1' required>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +116,7 @@
                             <p>
                                 <b>Imagen:</b>
                             </p>
-                            {{ form.foto }}
+                            <input type="file" name="foto" accept="image/*" id="id_foto">
                         </div>
                     </div>
                     

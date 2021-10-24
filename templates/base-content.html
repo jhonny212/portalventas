@@ -125,16 +125,6 @@
                             <span>Homes</span>
                         </a>
                     </li>
-                    {% if user.rol == '0' %}
-                        <li class="secondary">
-                            <a href="https://brgg13.wixsite.com/portal-ventas">
-                                <i class="material-icons">people</i>
-                                <span>Red Social</span>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">content_copy</i>
@@ -231,34 +221,6 @@
                         </ul>
                     </li>
 
-                    <!-- Reportes --> 
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">chrome_reader_mode</i>
-                            <span>Reportes</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{% url 'products_app:reporte-producto' %}">Productos o servicios</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'users_app:reporte-usuario' %}">Usuarios inscritos</a>
-                            </li>    
-                            <li>
-                                <a href="#">Productos o servicios mas vendidos</a>
-                            </li>   
-                            <li>
-                                <a href="#">Ventas</a>
-                            </li>    
-                            <li>
-                                <a href="#">Compras no terminadas</a>
-                            </li>   
-                            <li>
-                                <a href="#">Empleados/Departamentos</a>
-                            </li>     
-                            
-                        </ul>
-                    </li>
                     {% endif %}
 
                     
