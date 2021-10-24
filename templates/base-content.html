@@ -126,6 +126,16 @@
                             <span>Home</span>
                         </a>
                     </li>
+                    {% if user.rol == '0' %}
+                        <li class="secondary">
+                            <a href="https://vm.tiktok.com/ZMRfVWttU/">
+                                <i class="material-icons">people</i>
+                                <span>Red Social</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">content_copy</i>
@@ -228,7 +238,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{% url  'products_app:reporte-producto' %}">Productos o servicios</a>
+                                <a href="{% url 'products_app:reporte-producto' %}">Productos o servicios</a>
                             </li>
                             <li>
                                 <a href="{% url 'users_app:reporte-usuario' %}">Usuarios inscritos</a>
