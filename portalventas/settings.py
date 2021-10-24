@@ -152,7 +152,7 @@ STATICFILES_DIRS = [
 # Archivos de media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.joinpath('media')
-STATIC_ROOT = BASE_DIR.joinpath('static')
+STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
