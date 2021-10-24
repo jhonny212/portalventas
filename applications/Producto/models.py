@@ -20,7 +20,7 @@ class Categoria(models.Model):
 class ProductoServicio(models.Model):
     """Model definition for ProductoServicio."""
     nombre = models.CharField("Nombre", max_length=50)
-    cantidad = models.IntegerField()
+    cantidad = models.IntegerField(default=0)
     precio = models.FloatField()
     id_categoria = models.ForeignKey(
         Categoria,
@@ -45,3 +45,4 @@ class ProductoServicio(models.Model):
 
     def __str__(self):
         return self.nombre
+

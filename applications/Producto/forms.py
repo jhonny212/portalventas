@@ -16,7 +16,7 @@ class ProductServicioForm(forms.ModelForm):
             'nombre':forms.TextInput(attrs={
                 'class': 'form-control',
                 'type':'text',
-                'placeholder': 'Nombre del sitio'
+                'placeholder': 'Nombre del producto'
             }),
             'precio':forms.NumberInput(attrs={
               'class': 'form-control',
@@ -40,6 +40,16 @@ class ProductServicioForm(forms.ModelForm):
               'min':'0',
               'onchange':'setTwoNumberDecimal',
               'step':'1',
-              'value':'0'
+              'value':'0',
+              'required':'False'
+            }),
+            'descripcion':forms.Textarea(attrs={
+              'class': 'form-control',
+              'placeholder': 'Descripcion',
+            }),
+            'foto':forms.FileInput(attrs={
+              'class': 'form-control',
+              'type':'file',
+              'placeholder':'Foto',
             })
         }

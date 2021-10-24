@@ -4,6 +4,8 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views.generic import CreateView, UpdateView
 from applications.PaginaVenta.models import PaginaVentas
+from applications.Proveedor.forms import AsignacionProveedorForm, LoteForm
+from applications.Proveedor.models import Proveedor
 from .models import Categoria, ProductoServicio
 from .forms import CategoryForm, ProductServicioForm
 from django.contrib import messages
@@ -16,12 +18,6 @@ class CrearProducto(CreateView):
     success_url = reverse_lazy('products_app:lista-productos')
     form_class = ProductServicioForm
     template_name = "Producto/crear-producto.html"
-
-    def get_context_data(self,*args, **kwargs): 
-        context = super(CrearProducto, self).get_context_data(*args,**kwargs) 
-        context['exito'] = True
-        context['mensaje_a'] = "Se agrego el producto con exito" 
-        return context
 
 class EditarProducto(UpdateView):
     model = ProductoServicio
@@ -172,3 +168,42 @@ def eliminar_producto(request, id):
 
 def reporte_producto_servicio(request):
     return render(request, "Reportes/reporte-productos.html")
+
+def abastecer(request,id):
+    producto = ProductoServicio.objects.get(id=id)
+    otros_proveedores = Proveedor.objects.filter(Supplier_Product__id_producto=id)
+    aux = 1
+    if request.method == 'GET':
+        form = LoteForm(otros_proveedores = otros_proveedores, producto = id, aux = aux)
+    else:
+        form = LoteForm(data=request.POST, otros_proveedores = otros_proveedores, producto = id, aux = aux)
+        print(form)
+        if form.is_valid():
+            form.save()
+            producto.cantidad = producto.cantidad + int(request.POST.get('cantidad'))
+            producto.save()
+            request.session['exito'] = True
+            request.session['mensaje_a'] = "Se agrego"
+            return redirect('products_app:lista-productos')
+        else: 
+            print ('Error')
+    try:
+        exito = request.session['exito']
+        context = {
+            'producto':producto,
+            'producto_proveedores':producto_proveedor,
+            'form':form,
+            'exito':exito,
+            'mensaje_a':request.session['mensaje_a']
+        }
+        del request.session['exito']
+        del request.session['mensaje_a']
+        return render(request, "Producto/abastecer.html", context)
+    except:
+        print('No es de exito')
+    context = {
+        'producto':producto,
+        'producto_proveedores':producto_proveedor,
+        'form':form,
+    }
+    return render(request, "Producto/abastecer.html", context)

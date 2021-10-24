@@ -1,5 +1,6 @@
 from django import forms
-from django.forms.fields import CharField, IntegerField
+from django.forms import widgets
+from django.forms.fields import CharField, DateField, IntegerField
 from django.db.models import fields
 from django.forms.models import ModelChoiceField
 from .models import *
@@ -35,3 +36,42 @@ class AsignacionProveedorForm(forms.ModelForm):
         else:
             self.fields['id_proveedor'].initial = id_proveedor
             self.fields['id_producto'] = ModelChoiceField(queryset=otros_productos, label="Producto",required=True, empty_label='Seleccione un Producto')
+
+class LoteForm(forms.ModelForm):
+    class Meta:
+        model = LoteProducto
+        fields = '__all__'
+        widgets = {
+            'proveedor':forms.Select(attrs={
+              'class': 'form-control show-tick',
+            }),
+            'cantidad':forms.NumberInput(attrs={
+              'class': 'form-control',
+              'type': 'number',
+              'placeholder': 'Cantidad',
+              'min':'0',
+              'onchange':'setTwoNumberDecimal',
+              'step':'1',
+              'required':'False'
+            })
+        }
+
+
+    def __init__(self, *args, **kwargs):
+        aux = kwargs.pop('aux')
+        if aux == 0:
+            otros_productos = kwargs.pop('otros_productos')
+            id_proveedor = kwargs.pop('proveedor')
+        else:
+            id_producto = kwargs.pop('producto')
+            otros_proveedores = kwargs.pop('otros_proveedores')
+
+        super(LoteForm, self).__init__(*args, **kwargs)
+        self.fields['fecha_ingeso']= DateField(required =False) 
+
+        if aux == 1:
+            self.fields['proveedor'] = ModelChoiceField(queryset=otros_proveedores, label="Proveedor", required=True, empty_label='Seleccione un Proveedor')
+            self.fields['producto'].initial = id_producto
+        else:
+            self.fields['proveedor'].initial = id_proveedor
+            self.fields['producto'] = ModelChoiceField(queryset=otros_productos, label="Producto",required=True, empty_label='Seleccione un Producto')

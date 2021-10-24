@@ -48,4 +48,9 @@ urlpatterns = [
         views.reporte_producto_servicio,
         name='reporte-producto'
     ),
+    path(
+        'abastecer/<int:id>/',
+        views.abastecer,
+        name='abastecer'
+    )
 ]
