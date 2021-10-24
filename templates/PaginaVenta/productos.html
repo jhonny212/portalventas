@@ -19,7 +19,7 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);">Añadir a carrito</a></li>
+                            <li><a href="{% url 'compra_app:agregar-producto' producto.id  producto.id_pagina_ventas.id  %}">Añadir a carrito</a></li>
                         </ul>
                     </li>
                 </ul>

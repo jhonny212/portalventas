@@ -36,16 +36,27 @@ class UsuarioRegistroForm(forms.ModelForm):
             })
         }
 
-    def clean_password2(self):
-        password2 = self.cleaned_data.get('password2')
-        if self.cleaned_data.get('password')!=password2:
-            self.add_error('password2','Las contraseñas no coinciden')
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        user = Usuario.objects.filter(username=username)
+        if user:
+            self.add_error('username','El usuario ya existe')
+        return username
+    
+    def clean_FIELD(self):
+        FIELD = self.cleaned_data.get('FIELD')
+    
+    
+         # TODO Validation
+    
+        return FIELD
 
 class UsuarioUpdateForm(UsuarioRegistroForm):
     """Form definition for usernameUpdate."""
 
     class Meta(UsuarioRegistroForm.Meta):
         """Meta definition for usernameUpdateform."""
+        fields = '__all__'
         exclude = ('username',)
 
 class LoginForm(forms.Form):
