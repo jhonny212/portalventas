@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import json
 from django.core.exceptions import ImproperlyConfigured
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,20 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8sw)nm&l_58seg=5d_w9^1y1$&o^zvy#5p*b=z$3x=wn!j!4)5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
-with open("secret.json") as f:
-    secret = json.loads(f.read())
 
-def get_secret(secret_name, secrets=secret):
-    try:
-        return secrets[secret_name]
-    except:
-        msg = "la variable %s no existe" % secret_name
-        raise ImproperlyConfigured(msg)
 
 # Application definition
 
@@ -65,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'portalventas.urls'
@@ -91,6 +85,8 @@ WSGI_APPLICATION = 'portalventas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -101,7 +97,13 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+"""
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(
+        default= "postgres://puynxkltrvddtj:fb9d73f4703c615c87940db42985f6ec00dc5153ba8406a781e2efd6d123ac8e@ec2-54-158-232-223.compute-1.amazonaws.com:5432/ddh73eoodjei41"
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -143,12 +145,14 @@ AUTH_USER_MODEL = 'Users.Usuario'
 # Archivos estaticos
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR.joinpath('static')]
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath('static')
+]
 
 # Archivos de media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.joinpath('media')
-
+STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

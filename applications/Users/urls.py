@@ -34,9 +34,4 @@ urlpatterns = [
         views.Logout,
         name='cerrar-sesion'
     ),
-    path(
-        'reporte-usuario/',
-        views.reporte_usuarios,
-        name='reporte-usuario'
-    ),
 ]

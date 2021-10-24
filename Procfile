@@ -1,0 +1,1 @@
+web: gunicorn portalventas.wsgi --log-file -
