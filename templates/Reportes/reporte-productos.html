@@ -47,8 +47,8 @@
                                 <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Pagina de ventas</th>
-                                <th>Proveedor</th>
                                 <th>Cantidad</th>
+                                <th>Precio</th>
                                 <th> </th>
                             </tr>
                         </thead>
@@ -58,22 +58,22 @@
                                 <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Pagina de ventas</th>
-                                <th>Proveedor</th>
                                 <th>Cantidad</th>
+                                <th>Precio</th>
                                 <th> </th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            {% for lote in lotes %}
+                            {% for producto in productos %}
                             <tr>
-                                <td>{{ lote.producto.id }}</td>
-                                <td>{{ lote.producto.nombre }}</td>
-                                <td>{{ lote.producto.id_categoria.nombre }}</td>
-                                <td>{{ lote.producto.id_pagina_ventas.nombre_sitio }}</td>
-                                <td>{{ lote.producto.cantidad }}</td>
-                                <td>{{ lote.producto.precio }}</td>
+                                <td>{{ producto.id }}</td>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.id_categoria.nombre }}</td>
+                                <td>{{ producto.id_pagina_ventas.nombre_sitio }}</td>
+                                <td>{{ producto.cantidad }}</td>
+                                <td>{{ producto.precio }}</td>
                                 <td style="text-align: center;">
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:abastecer' producto.id %}" title="Lotes" ><i class="material-icons">assignment</i></a></small>   
+                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:lote' producto.id %}" title="Lotes" ><i class="material-icons">assignment</i></a></small>   
                                 </td>
                             </tr>
                             {% endfor %}

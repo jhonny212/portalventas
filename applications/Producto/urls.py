@@ -52,5 +52,10 @@ urlpatterns = [
         'abastecer/<int:id>/',
         views.abastecer,
         name='abastecer'
+    ),
+    path(
+        'lote/<int:id>/',
+        views.reporte_lote,
+        name='lote'
     )
 ]

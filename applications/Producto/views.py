@@ -170,6 +170,23 @@ def reporte_producto_servicio(request):
     context ={'productos':ProductoServicio.objects.all()}
     return render(request, "Reportes/reporte-productos.html", context)
 
+def reporte_lote(request,id):
+    producto = ProductoServicio.objects.get(id=id)
+    lotes = LoteProducto.objects.filter(producto__id=producto.id)
+    context = {
+        'nombre_producto':producto.nombre,
+        'lotes':lotes
+    }
+
+    if request.method == 'GET':
+        print('Entro')
+        lotes = LoteProducto.objects.filter(producto__id=producto.id).filter(fecha_ingreso__level__lte=request.POST.get('fecha'))
+        context = {
+        'nombre_producto':producto.nombre,
+        'lotes':lotes
+    }
+    return render(request,"Reportes/reporte-productos-lote.html",context)
+
 def abastecer(request,id):
     producto = ProductoServicio.objects.get(id=id)
     otros_proveedores = Proveedor.objects.filter(Supplier_Product__id_producto=id)
