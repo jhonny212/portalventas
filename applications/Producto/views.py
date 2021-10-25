@@ -177,10 +177,11 @@ def reporte_lote(request,id):
         'nombre_producto':producto.nombre,
         'lotes':lotes
     }
-
-    if request.method == 'GET':
-        print('Entro')
-        lotes = LoteProducto.objects.filter(producto__id=producto.id).filter(fecha_ingreso__level__lte=request.POST.get('fecha'))
+    if request.method == 'POST':
+        if request.POST.get('fecha_ingeso'):
+            lotes = LoteProducto.objects.filter(producto__id=producto.id).filter(fecha_ingreso__lte=request.POST.get('fecha_ingeso'))
+        else:
+            lotes = LoteProducto.objects.filter(producto__id=producto.id)
         context = {
         'nombre_producto':producto.nombre,
         'lotes':lotes

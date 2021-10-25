@@ -40,7 +40,7 @@ class AsignacionProveedor(models.Model):
         return f'{self.id_producto} {self.id_proveedor}'
 
 class LoteProducto(models.Model):
-    fecha_ingeso = models.DateTimeField(null=True,default = now)
+    fecha_ingreso = models.DateTimeField(null=True,default = now)
     cantidad = models.IntegerField()
     proveedor = models.ForeignKey(
         Proveedor,

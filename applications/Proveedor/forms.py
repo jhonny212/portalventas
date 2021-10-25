@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import widgets
-from django.forms.fields import CharField, DateField, IntegerField
+from django.forms.fields import CharField, DateField, DateTimeField, IntegerField
 from django.db.models import fields
 from django.forms.models import ModelChoiceField
 from .models import *
@@ -67,7 +67,7 @@ class LoteForm(forms.ModelForm):
             otros_proveedores = kwargs.pop('otros_proveedores')
 
         super(LoteForm, self).__init__(*args, **kwargs)
-        self.fields['fecha_ingeso']= DateField(required =False) 
+        self.fields['fecha_ingreso']= DateField(required =False) 
 
         if aux == 1:
             self.fields['proveedor'] = ModelChoiceField(queryset=otros_proveedores, label="Proveedor", required=True, empty_label='Seleccione un Proveedor')

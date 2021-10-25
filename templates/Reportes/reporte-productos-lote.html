@@ -44,12 +44,13 @@
                 </div>
                 <div class="row clearfix">
                     <div class="col-xs-3">
-                        <form>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <h2 class="card-inside-title">Fecha</h2>
                             <div class="input-daterange input-group" id="bs_datepicker_range_container">
                                 <div class="form-line">
                                     <br>
-                                    <input type="date" class="form-control" placeholder="Date" required>
+                                    <input name="fecha_ingeso" id="fecha_ingeso" type="date" class="form-control" placeholder="Date">
                                 </div>
                                 <span class="input-group-addon"></span>
                                 <div>
@@ -85,7 +86,7 @@
                                 <td>{{ lote.id }}</td>
                                 <td>{{ lote.proveedor.nombre }}</td>
                                 <td>{{ lote.cantidad }}</td>
-                                <td>{{ lote.fecha_ingeso }}</td>
+                                <td>{{ lote.fecha_ingreso }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
