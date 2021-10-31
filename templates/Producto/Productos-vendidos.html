@@ -1,0 +1,142 @@
+{% extends 'base-content.html' %}
+{% load static %}
+{% block css %}
+    <!-- JQuery DataTable Css -->
+    <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
+    <!-- Colorpicker Css -->
+    <link href="{% static 'plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css' %}" rel="stylesheet" />
+
+    <!-- Dropzone Css -->
+    <link href="{% static 'plugins/dropzone/dropzone.css' %}" rel="stylesheet">
+
+    <!-- Multi Select Css -->
+    <link href="{% static 'plugins/multi-select/css/multi-select.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Spinner Css -->
+    <link href="{% static 'plugins/jquery-spinner/css/bootstrap-spinner.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Tagsinput Css -->
+    <link href="{% static 'plugins/bootstrap-tagsinput/bootstrap-tagsinput.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Select Css -->
+    <link href="{% static 'plugins/bootstrap-select/css/bootstrap-select.css' %}" rel="stylesheet" />
+
+    <!-- noUISlider Css -->
+    <link href="{% static 'plugins/nouislider/nouislider.min.css' %}" rel="stylesheet" />
+    {% endblock css %}
+{% block title %}
+    Lista de productos y servicios
+{% endblock title %} 
+
+{% block content %}
+<div class="block-header">
+    <h2>Productos Vendidos </h2>
+</div>
+<!-- Exportable Table -->
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Productos Vendidos
+                </h2>              
+            </div>
+            
+            {% if combos %}
+                <div class="row clearfix">
+                    <label>Proveedor</label>
+                    <div class="col-sm-6">
+                        {{ combos.proveedor }}
+                    </div>
+                </div>
+                <br><br><br>
+                <div class="row clearfix">
+                    <label>Categoria</label>
+                    <div class="col-sm-6">
+                        {{ combos.categoria }}
+                    </div>
+                </div>
+                <br><br><br>
+                <input type="button" value="Filtrar" onclick="redirect()">
+            {% else %}
+                <form action="" method="get">
+                    <label for="cantidad">Cantidad de venta</label>
+                    <input type="number" name="cantidad" id="cantidad" class='form-control'>
+                    <input type="submit" value="Filtrar">
+                </form>
+            {% endif %}
+                
+            <div class="body">
+                <div class="table-responsive">                    
+                    <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for producto in Productos %}
+                            <tr>
+                                <td>{{ producto.1 }}</td>
+                                <td>{{ producto.3 }}</td>
+                                <td>{{ producto.0 }}</td>
+                                <td>{{ producto.2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# Exportable Table -->
+{% endblock content %}
+{% block jstable %}
+    <script src="{% static 'js/pages/tables/jquery-datatable.js' %}"></script>
+{% endblock jstable %}
+{% block js %}
+<script>
+    function redirect() {
+        const categoria = document.getElementById('id_categoria').value
+        const proveedor = document.getElementById('id_proveedor').value
+        console.log(categoria)
+        let url = "http://localhost:8000/ROUTE/"
+        if (categoria){
+            url += "?categoria="+categoria
+        }
+        if (proveedor){
+            if(categoria){
+                url += "&proveedor="+proveedor
+            }else{
+                url += "?proveedor="+proveedor
+            }
+        }
+        window.location.href = url;
+    }
+</script>
+    
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="{% static 'plugins/jquery-datatable/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/jszip.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/pdfmake.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
+
+    
+{% endblock js %}

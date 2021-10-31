@@ -24,7 +24,11 @@ urlpatterns = [
         name='cancelar-carrito'
     ),
     path(
-        'reporte-error-compra',
+        'realizar-compra/',
+        views.realizar_compra,
+        name='realizar-compra'
+    ),
+    path('reporte-error-compra',
         views.reporte_compras_no_finalizadas,
         name='reporte-error-compra'
     ),
@@ -34,8 +38,3 @@ urlpatterns = [
         name='reporte-ventas'
     )
 ]
-
-#dpi
-#boleta 25 quetzales
-#orden de pago
-#acta final completa

@@ -43,13 +43,11 @@ def actualizar_perfil(request):
     last_name = request.POST['last_name']
     email = request.POST['email']
     about_me = request.POST['about_me']
-    no_cuenta = request.POST['no_cuenta']
     bool = Usuario.objects.filter(id=request.user.id).update(
         nombre=nombre,
         last_name=last_name,
         email=email,
         about_me=about_me,
-        no_cuenta=no_cuenta,
     )
     return HttpResponseRedirect(reverse_lazy('users_app:info-usuario'))
 

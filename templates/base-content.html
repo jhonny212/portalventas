@@ -107,6 +107,7 @@
                             <li role="separator" class="divider"></li>
                             <li><a href="{% url 'compra_app:ver-carrito' %}"><i class="material-icons">shopping_cart</i>Carrito de compras</a></li>
                             <li><a href="{% url 'compra_app:cancelar-carrito' %}"><i class="material-icons">shopping_cart</i>Cancelar carrito de compras</a></li>
+                            <li><a href="{% url 'compra_app:realizar-compra' %}"><i class="material-icons">shopping_cart</i>Realizar compra</a></li>                            
                             <li role="separator" class="divider"></li>
                             <li><a href="{% url 'users_app:cerrar-sesion' %} "><i class="material-icons">input</i>Cerrar Sesion</a></li>
                         </ul>
@@ -243,9 +244,12 @@
                             </li>
                             <li>
                                 <a href="{% url 'users_app:reporte-usuario' %}">Usuarios inscritos</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'products_app:productos-vendidos' %}">Venta de productos con filtrado</a>
                             </li>    
                             <li>
-                                <a href="#">Productos o servicios mas vendidos</a>
+                                <a href="{% url 'products_app:mejores-productos-vendidos' %}">Productos o servicios mas vendidos</a>
                             </li>   
                             <li>
                                 <a href="{% url 'compra_app:reporte-ventas' %}">Ventas</a>

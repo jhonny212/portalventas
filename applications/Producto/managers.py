@@ -24,3 +24,6 @@ class ProductoServicioManager(models.Manager):
             id_pagina_ventas__id=id
         )
         return x   
+    
+    def get_productos_filter(filter=''):
+        pass

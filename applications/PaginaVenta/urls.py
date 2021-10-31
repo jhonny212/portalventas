@@ -23,4 +23,9 @@ urlpatterns = [
         views.ProductosPaginaVentaListView.as_view(),
         name='productos-sitio'
     ),
+    path(
+        'suscribirse/<int:id>/',
+        views.suscribirse,
+        name='suscribirse'
+    ),
 ]

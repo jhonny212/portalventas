@@ -39,7 +39,17 @@ urlpatterns = [
         name='editar-producto'
     ),
     path(
-        'crear-producto/',
+        'venta-productos/',
+        views.ProductosVendidosListView.as_view(),
+        name='productos-vendidos'
+    ),
+    path(
+        'venta-mejores-productos/',
+        views.MejoresProductosVendidosListView.as_view(),
+        name='mejores-productos-vendidos'
+    ),
+    
+    path('crear-producto/',
         views.CrearProducto.as_view(),
         name='crear-producto'
     ),

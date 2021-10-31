@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import authenticate
 from .models import Usuario
+import requests
+import json
 
 class UsuarioRegistroForm(forms.ModelForm):
     """Form definition for username."""
@@ -42,14 +44,24 @@ class UsuarioRegistroForm(forms.ModelForm):
         if user:
             self.add_error('username','El usuario ya existe')
         return username
-    
-    def clean_FIELD(self):
-        FIELD = self.cleaned_data.get('FIELD')
-    
-    
-         # TODO Validation
-    
-        return FIELD
+
+    def clean_password2(self):
+        password2 = self.cleaned_data.get('password2')
+        password = self.cleaned_data.get('password')
+        if not password2 == password:
+            self.add_error('password2','Las contraseñas no coinciden')
+        else:
+            url = 'https://seminarioportalpagos.herokuapp.com/pagos/verificacion_de_cuenta'
+            response = requests.post(url,json={
+                "username":self.cleaned_data.get('username'),
+                "password":password,
+            })
+            if response.status_code == 200:
+                res_json = json.loads(response.text)
+                print(res_json)
+            else:
+                self.add_error('password2','No existe la cuenta')
+        return password2
 
 class UsuarioUpdateForm(UsuarioRegistroForm):
     """Form definition for usernameUpdate."""
