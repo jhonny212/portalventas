@@ -3,9 +3,11 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView
+from django.db.models.aggregates import Sum
 from applications.Producto.models import ProductoServicio
-from applications.PaginaVenta.models import Suscripciones
+from applications.PaginaVenta.models import PaginaVentas, Suscripciones
 from applications.Compra.models import Compra,Detalle
+from applications.Users.models import Usuario
 from . import functions
 from django.conf import settings
 from datetime import datetime
@@ -118,3 +120,28 @@ def realizar_compra(request):
 
     return HttpResponseRedirect(
     f"{settings.PATH_SERVER}main/?mensaje=No se pudo realizar la compra")
+
+def reporte_compras_no_finalizadas(request):
+    compras = Compra.objects.all().exclude(estado='0')
+    context = {'compras':compras}
+    return render (request, "Reportes/reporte-error-compras.html", context)
+
+def reporte_compras(request):
+    compras = Compra.objects.filter(estado='0')
+    total = compras.aggregate(total_precio=Sum('total'))['total_precio']
+    if total == None:
+        total = 0;
+    usuarios = Usuario.objects.filter(rol='1').count()
+    paginas = PaginaVentas.objects.all().count()
+    productos = Detalle.objects.filter(id_compra__estado='0')
+    total_products = productos.aggregate(total_compras=Sum('cantidad'))['total_compras']
+    if total_products == None:
+        total_products = 0
+    context = {
+        'compras':compras,
+        'total':total,
+        'productos':total_products,
+        'paginas':paginas,
+        'clientes':usuarios
+        }
+    return render (request, "Reportes/reporte-ventas.html", context)

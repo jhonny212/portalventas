@@ -1,20 +1,31 @@
 from django.db.models.base import Model
+from django.http import request
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from applications.PaginaVenta.models import PaginaVentas
 from applications.Compra.models import Detalle
+from applications.Proveedor.forms import AsignacionProveedorForm, LoteForm
+from applications.Proveedor.models import LoteProducto, Proveedor
 from .models import Categoria, ProductoServicio
 from .forms import CategoryForm, ProductServicioForm,Detalle_venta
 from django.contrib import messages
 from django.views.generic import ListView
+from django.urls import reverse_lazy
+
 # Create your views here.
 
-class Prueba(CreateView):
+class CrearProducto(CreateView):
     model = ProductoServicio
-    success_url = "."
+    success_url = reverse_lazy('products_app:lista-productos')
+    form_class = ProductServicioForm
     template_name = "Producto/crear-producto.html"
-    fields = "__all__"
+
+class EditarProducto(UpdateView):
+    model = ProductoServicio
+    success_url = reverse_lazy('products_app:lista-productos')
+    form_class = ProductServicioForm
+    template_name = "Producto/editar-producto.html"
 
 def crear_categoria(request):
     exist = False
@@ -143,22 +154,6 @@ def lista_productos(request):
         print('No es de error')
     return render(request, "Producto/lista-productos.html", context)
 
-def crear_producto(request):
-    categorias = Categoria.objects.all()
-    paginaventas = PaginaVentas.objects.all()
-    context = {
-        'categorias':categorias,
-        'paginaventas':paginaventas
-    }
-    if request.method == 'POST':
-        producto = ProductServicioForm(request.POST)
-        print(producto)
-        if producto.is_valid():
-            producto.save()
-            request.session['exito'] = True
-            request.session['mensaje_a'] = "Se agrego con exito el producto " + request.POST.get('nombre')
-            return redirect('products_app:lista-productos')
-    return render(request, "Producto/crear-producto.html", context)
 
 def eliminar_producto(request, id):
     try: 
@@ -173,29 +168,65 @@ def eliminar_producto(request, id):
     request.session['mensaje_a'] = "Se elimino con exito el producto " + name
     return redirect('products_app:lista-productos')
 
-def editar_producto(request, id):
-    producto_editar = ProductoServicio.objects.get(id = id)
-    categorias = Categoria.objects.all()
-    paginaventas = PaginaVentas.objects.all()
-    if request.method == 'GET':
+def reporte_producto_servicio(request):
+    context ={'productos':ProductoServicio.objects.all()}
+    return render(request, "Reportes/reporte-productos.html", context)
+
+def reporte_lote(request,id):
+    producto = ProductoServicio.objects.get(id=id)
+    lotes = LoteProducto.objects.filter(producto__id=producto.id)
+    context = {
+        'nombre_producto':producto.nombre,
+        'lotes':lotes
+    }
+    if request.method == 'POST':
+        if request.POST.get('fecha_ingeso'):
+            lotes = LoteProducto.objects.filter(producto__id=producto.id).filter(fecha_ingreso__lte=request.POST.get('fecha_ingeso'))
+        else:
+            lotes = LoteProducto.objects.filter(producto__id=producto.id)
         context = {
-            'productoservicio':producto_editar,
-            'categorias':categorias,
-            'paginaventas':paginaventas
-            }
-    else :
-        producto_editar.nombre = request.POST.get('nombre')
-        producto_editar.precio = float(request.POST.get('precio'))
-        producto_editar.cantidad = int(request.POST.get('cantidad'))
-        print(request.POST.get('foto'))
-        producto_editar.foto = "Portada/" + request.POST.get('foto')
-        producto_editar.id_categoria = Categoria.objects.get(id=int(request.POST.get('id_categoria')))
-        producto_editar.id_pagina_ventas = PaginaVentas.objects.get(id=int(request.POST.get('id_pagina_ventas')))
-        producto_editar.save()
-        request.session['exito'] = True
-        request.session['mensaje_a'] = "Se edito con exito el producto!"
-        return redirect('products_app:lista-productos')
-    return render(request, "Producto/editar-producto.html", context)
+        'nombre_producto':producto.nombre,
+        'lotes':lotes
+    }
+    return render(request,"Reportes/reporte-productos-lote.html",context)
+
+def abastecer(request,id):
+    producto = ProductoServicio.objects.get(id=id)
+    otros_proveedores = Proveedor.objects.filter(Supplier_Product__id_producto=id)
+    aux = 1
+    if request.method == 'GET':
+        form = LoteForm(otros_proveedores = otros_proveedores, producto = id, aux = aux)
+    else:
+        form = LoteForm(data=request.POST, otros_proveedores = otros_proveedores, producto = id, aux = aux)
+        print(form)
+        if form.is_valid():
+            form.save()
+            producto.cantidad = producto.cantidad + int(request.POST.get('cantidad'))
+            producto.save()
+            request.session['exito'] = True
+            request.session['mensaje_a'] = "Se agrego"
+            return redirect('products_app:lista-productos')
+        else: 
+            print ('Error')
+    try:
+        exito = request.session['exito']
+        context = {
+            'producto':producto,
+            'form':form,
+            'exito':exito,
+            'mensaje_a':request.session['mensaje_a']
+        }
+        del request.session['exito']
+        del request.session['mensaje_a']
+        return render(request, "Producto/abastecer.html", context)
+    except:
+        print('No es de exito')
+    context = {
+        'producto':producto,
+        'form':form,
+    }
+    return render(request, "Producto/abastecer.html", context)
+
 
 def productos_vendidos(request):
     val = Detalle.objects.get_productos_filter()
@@ -246,3 +277,4 @@ class MejoresProductosVendidosListView(ListView):
             if x[0]>=cantidad:
                 queryset2.append(x)
         return queryset2
+

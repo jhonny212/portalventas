@@ -5,12 +5,12 @@
     <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
 {% endblock css %}
 {% block title %}
-    Lista de productos y servicios
+    Reporte de usuarios inscritos
 {% endblock title %} 
 
 {% block content %}
 <div class="block-header">
-    <h2>Lista de Productos y Servicios </h2>
+    <h2>Reporte de Usuarios Inscritos </h2>
 </div>
 <!-- Exportable Table -->
 <div class="row clearfix">
@@ -33,48 +33,53 @@
             {% endif %}
             <div class="header">
                 <h2>
-                    Lista
+                    Reporte
                 </h2>
             </div>
             <div class="body">
+                <!-- Table -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Username</th>
                                 <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th>Pagina de ventas</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
+                                <th>Rol</th>
+                                <th>Fecha de Registro</th>
+                                <th>Ultimo Ingreso</th>
+                                <th>Activo</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID</th>
+                                <th>Username</th>
                                 <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th>Pagina de ventas</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
+                                <th>Rol</th>
+                                <th>Fecha de Registro</th>
+                                <th>Ultimo Ingreso</th>
+                                <th>Activo</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            {% for producto in productos %}
+                            {% for usuario in usuarios %}
                             <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.id_categoria.nombre }}</td>
-                                <td>{{ producto.id_pagina_ventas.nombre_sitio }}</td>
-                                <td>{{ producto.cantidad }}</td>
-                                <td>{{ producto.precio }}</td>
+                                <td>{{ usuario.username }}</td>
+                                <td>{{ usuario.nombre }}</td>
+                                <td>
+                                    {% if usuario.rol == '0' %}
+                                    Administrador
+                                    {% else %}
+                                    Cliente
+                                    {% endif %}
+                                </td>
+                                <td>{{ usuario.date_joined }}</td>
+                                <td>{{ usuario.last_login }}</td>
                                 <td style="text-align: center;">
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:abastecer' producto.id %}" title="Abastecer" ><i class="material-icons">library_add</i></a></small>   
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:editar-producto' producto.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:eliminar-productos' producto.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'proveedor_app:enlazar-proveedor' producto.id %}" title="Enlazar Proveedores" ><i class="material-icons">link</i></a></small> 
+                                    {% if usuario.is_active %}
+                                        <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="#" title="Activo" ><i class="material-icons">check</i></a></small>   
+                                    {% else %}
+                                        <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="#" title="No Activo" ><i class="material-icons">close</i></a></small> 
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}

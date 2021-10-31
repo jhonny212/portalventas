@@ -5,12 +5,12 @@
     <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
 {% endblock css %}
 {% block title %}
-    Lista de productos y servicios
+    Reporte de productos y servicios
 {% endblock title %} 
 
 {% block content %}
 <div class="block-header">
-    <h2>Lista de Productos y Servicios </h2>
+    <h2>Reporte de Productos y Servicios </h2>
 </div>
 <!-- Exportable Table -->
 <div class="row clearfix">
@@ -33,49 +33,60 @@
             {% endif %}
             <div class="header">
                 <h2>
-                    Lista
+                    Reporte
                 </h2>
             </div>
             <div class="body">
+                <div class="row clearfix">
+                    <div class="col-xs-3">
+                        <h2 class="card-inside-title">Lotes del producto: <b> {{ nombre_producto }}</b></h2>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-xs-3">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <h2 class="card-inside-title">Fecha</h2>
+                            <div class="input-daterange input-group" id="bs_datepicker_range_container">
+                                <div class="form-line">
+                                    <br>
+                                    <input name="fecha_ingeso" id="fecha_ingeso" type="date" class="form-control" placeholder="Date">
+                                </div>
+                                <span class="input-group-addon"></span>
+                                <div>
+                                    <small style="font-size: 1.5em; padding-right: 0.25em;"><button type="submit"  class="btn btn-primary m-t-15 waves-effect" title="Buscar" ><i class="material-icons">search</i></a></small>   
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+                <!-- Table -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th>Pagina de ventas</th>
+                                <th># Lote</th>
+                                <th>Proveedor</th>
                                 <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
+                                <th>Fecha</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th>Pagina de ventas</th>
+                                <th># Lote</th>
+                                <th>Proveedor</th>
                                 <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
+                                <th>Fecha</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            {% for producto in productos %}
+                            {% for lote in lotes %}
                             <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.id_categoria.nombre }}</td>
-                                <td>{{ producto.id_pagina_ventas.nombre_sitio }}</td>
-                                <td>{{ producto.cantidad }}</td>
-                                <td>{{ producto.precio }}</td>
-                                <td style="text-align: center;">
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:abastecer' producto.id %}" title="Abastecer" ><i class="material-icons">library_add</i></a></small>   
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:editar-producto' producto.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:eliminar-productos' producto.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'proveedor_app:enlazar-proveedor' producto.id %}" title="Enlazar Proveedores" ><i class="material-icons">link</i></a></small> 
-                                </td>
+                                <td>{{ lote.id }}</td>
+                                <td>{{ lote.proveedor.nombre }}</td>
+                                <td>{{ lote.cantidad }}</td>
+                                <td>{{ lote.fecha_ingreso }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
