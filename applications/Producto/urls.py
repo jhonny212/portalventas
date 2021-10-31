@@ -43,4 +43,15 @@ urlpatterns = [
         views.editar_producto,
         name='editar-producto'
     ),
+    path(
+        'venta-productos/',
+        views.ProductosVendidosListView.as_view(),
+        name='productos-vendidos'
+    ),
+    path(
+        'venta-mejores-productos/',
+        views.MejoresProductosVendidosListView.as_view(),
+        name='mejores-productos-vendidos'
+    ),
+    
 ]

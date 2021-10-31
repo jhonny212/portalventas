@@ -3,10 +3,11 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views.generic import CreateView
 from applications.PaginaVenta.models import PaginaVentas
+from applications.Compra.models import Detalle
 from .models import Categoria, ProductoServicio
-from .forms import CategoryForm, ProductServicioForm
+from .forms import CategoryForm, ProductServicioForm,Detalle_venta
 from django.contrib import messages
-
+from django.views.generic import ListView
 # Create your views here.
 
 class Prueba(CreateView):
@@ -195,3 +196,53 @@ def editar_producto(request, id):
         request.session['mensaje_a'] = "Se edito con exito el producto!"
         return redirect('products_app:lista-productos')
     return render(request, "Producto/editar-producto.html", context)
+
+def productos_vendidos(request):
+    val = Detalle.objects.get_productos_filter()
+    print(val)
+
+
+class ProductosVendidosListView(ListView):
+    model = Detalle
+    template_name = "Producto/Productos-vendidos.html"
+    context_object_name = "Productos"
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductosVendidosListView, self).get_context_data(**kwargs)
+        context["combos"]=Detalle_venta
+        return context
+    
+    def get_queryset(self):
+        queryset = super(ProductosVendidosListView, self).get_queryset()
+        cat = None
+        prov = None
+        print(self.request.GET)
+        if 'categoria' in self.request.GET:
+            cat = self.request.GET['categoria']
+        if 'proveedor' in self.request.GET:
+            prov = self.request.GET['proveedor']
+        filtro = ''
+        if cat:
+            filtro=f' AND pc.id={cat}'
+        if prov:
+            filtro+=f' AND pa.id={prov}'
+        queryset = Detalle.objects.get_productos_filter(filtro)
+        return queryset
+
+class MejoresProductosVendidosListView(ListView):
+    model = Detalle
+    template_name = "Producto/Productos-vendidos.html"
+    context_object_name = "Productos"
+    
+    def get_queryset(self):
+        queryset = super(MejoresProductosVendidosListView, self).get_queryset()
+        if 'cantidad' in self.request.GET:
+            cantidad =int(self.request.GET['cantidad'])
+        else:
+            cantidad = 5
+        queryset = Detalle.objects.get_productos_filter()
+        queryset2 = []
+        for x in queryset:
+            if x[0]>=cantidad:
+                queryset2.append(x)
+        return queryset2

@@ -23,9 +23,9 @@ urlpatterns = [
         views.cancelar_compra,
         name='cancelar-carrito'
     ),
+    path(
+        'realizar-compra/',
+        views.realizar_compra,
+        name='realizar-compra'
+    ),
 ]
-
-#dpi
-#boleta 25 quetzales
-#orden de pago
-#acta final completa

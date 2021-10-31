@@ -8,6 +8,8 @@ from .models import PaginaVentas,Suscripciones
 from . import forms
 from applications.Producto.models import ProductoServicio
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
+from django.conf import settings
 
 class PaginaVentasCreateView(LoginRequiredMixin,CreateView):
     model = PaginaVentas
@@ -54,4 +56,12 @@ class ProductosPaginaVentaListView(LoginRequiredMixin,ListView):
         context = super(ProductosPaginaVentaListView, self).get_context_data(**kwargs)
         context["suscripciones"]=Suscripciones.objects.get_suscripciones(self.request.user.id)
         return context
-    
+
+def suscribirse(request,id):
+    sitio = PaginaVentas.objects.filter(id=id).first()
+    sub = Suscripciones.objects.suscribirse(request.user,sitio)
+    if sub:
+        return HttpResponseRedirect(
+            f"{settings.PATH_SERVER}ver-sitios/?mensaje=Suscripcion correcta")
+    return HttpResponseRedirect(
+            f"{settings.PATH_SERVER}ver-sitios/?mensaje=No se pudo suscribir")
