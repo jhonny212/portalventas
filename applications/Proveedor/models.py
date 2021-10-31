@@ -1,5 +1,6 @@
 from django.db import models
 from applications.Producto.models import ProductoServicio
+from django.utils.timezone import now
 
 class Proveedor(models.Model):
     """Model definition for Proveedor."""
@@ -37,3 +38,28 @@ class AsignacionProveedor(models.Model):
 
     def __str__(self):
         return f'{self.id_producto} {self.id_proveedor}'
+
+class LoteProducto(models.Model):
+    fecha_ingreso = models.DateTimeField(null=True,default = now)
+    cantidad = models.IntegerField()
+    proveedor = models.ForeignKey(
+        Proveedor,
+        on_delete=models.CASCADE,
+        related_name='Proveedor_Lote',
+        null = True
+    )
+    producto = models.ForeignKey(
+        ProductoServicio,
+        on_delete = models.CASCADE,
+        related_name = 'Producto_Lote',
+        null = True
+    )
+
+    class Meta:
+        """Meta definition for Lote."""
+
+        verbose_name = 'Lote'
+        verbose_name_plural = 'Lotes'
+
+    def __str__(self):
+        return self.id

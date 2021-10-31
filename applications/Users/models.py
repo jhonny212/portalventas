@@ -19,7 +19,6 @@ class Usuario(AbstractUser, PermissionsMixin):
     objects = UserManager()
     about_me = models.TextField(max_length=50,blank=True,null=True)
     REQUIRED_FIELDS = ['nombre']
-    no_cuenta = models.IntegerField(null=True, blank=True)
     class Meta:
         """Meta definition for Usuario."""
 

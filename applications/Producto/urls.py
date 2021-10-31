@@ -29,18 +29,33 @@ urlpatterns = [
         name='lista-productos'
     ),
     path(
-        'crear-producto/',
-        views.crear_producto,
-        name='crear-producto'
-    ),
-    path(
         'eliminar-productos/<int:id>/',
         views.eliminar_producto,
         name='eliminar-productos'
     ),
     path(
-        'editar-producto/<int:id>/',
-        views.editar_producto,
+        'editar-producto/<int:pk>/',
+        views.EditarProducto.as_view(),
         name='editar-producto'
     ),
+    path(
+        'crear-producto/',
+        views.CrearProducto.as_view(),
+        name='crear-producto'
+    ),
+    path(
+        'reporte-producto/',
+        views.reporte_producto_servicio,
+        name='reporte-producto'
+    ),
+    path(
+        'abastecer/<int:id>/',
+        views.abastecer,
+        name='abastecer'
+    ),
+    path(
+        'lote/<int:id>/',
+        views.reporte_lote,
+        name='lote'
+    )
 ]

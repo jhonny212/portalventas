@@ -5,12 +5,12 @@
     <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
 {% endblock css %}
 {% block title %}
-    Lista de productos y servicios
+    Reporte de compras no terminadas
 {% endblock title %} 
 
 {% block content %}
 <div class="block-header">
-    <h2>Lista de Productos y Servicios </h2>
+    <h2>Reporte de compras no terminadas </h2>
 </div>
 <!-- Exportable Table -->
 <div class="row clearfix">
@@ -33,49 +33,53 @@
             {% endif %}
             <div class="header">
                 <h2>
-                    Lista
+                    Reporte
                 </h2>
             </div>
             <div class="body">
+                <!-- Table -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th>Pagina de ventas</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
+                                <th># Compra</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th>Pagina de ventas</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
+                                <th># Compra</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Total</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            {% for producto in productos %}
+                            {% for compra in compras %}
                             <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.id_categoria.nombre }}</td>
-                                <td>{{ producto.id_pagina_ventas.nombre_sitio }}</td>
-                                <td>{{ producto.cantidad }}</td>
-                                <td>{{ producto.precio }}</td>
+                                <td>{{ compra.id }}</td>
+                                <td>{{ compra.nombre_cliente }}</td>
+                                <td>{{ compra.fecha }}</td>
                                 <td style="text-align: center;">
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:abastecer' producto.id %}" title="Abastecer" ><i class="material-icons">library_add</i></a></small>   
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:editar-producto' producto.id %}" title="Editar" ><i class="material-icons">edit</i></a></small>   
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'products_app:eliminar-productos' producto.id %}" title="Eliminar" ><i class="material-icons">delete</i></a></small> 
-                                    <small style="font-size: 1.5em; padding-right: 0.5em;"><a href="{% url 'proveedor_app:enlazar-proveedor' producto.id %}" title="Enlazar Proveedores" ><i class="material-icons">link</i></a></small> 
+                                    {% if compra.estado == '1' %}
+                                    <span class="badge bg-red">
+                                        Error de compra 
+                                    </span>
+                                    {% elif compra.estado == '2' %}
+                                    <span class="badge bg-pink">
+                                        Compra cancelada
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-orange">
+                                        En proceso 
+                                    </span>
+                                    {% endif %}
                                 </td>
+                                <td>{{ compra.total }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

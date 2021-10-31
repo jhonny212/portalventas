@@ -23,6 +23,16 @@ urlpatterns = [
         views.cancelar_compra,
         name='cancelar-carrito'
     ),
+    path(
+        'reporte-error-compra',
+        views.reporte_compras_no_finalizadas,
+        name='reporte-error-compra'
+    ),
+    path(
+        'reporte-ventas',
+        view=views.reporte_compras,
+        name='reporte-ventas'
+    )
 ]
 
 #dpi
