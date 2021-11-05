@@ -158,4 +158,4 @@ STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-PATH_SERVER = "http://127.0.0.1:8000/"
+PATH_SERVER = "https://portalventascf.herokuapp.com/"
