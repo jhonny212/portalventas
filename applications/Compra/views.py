@@ -89,11 +89,11 @@ def cancelar_compra(request):
             for d in details:
                 functions.eliminar_detalle(d.id, d.id_producto.id,False)
             details.delete()
-            request.session['compra']=None
+            del request.session['compra']
             compra.save()
             return HttpResponseRedirect(
             f"{settings.PATH_SERVER}main/?mensaje=compra cancelada")
-        request.session['compra']=None
+        del request.session['compra']
         compra.save()
         return HttpResponseRedirect(
             f"{settings.PATH_SERVER}main/?mensaje=no hay productos en el carrito")
@@ -114,7 +114,7 @@ def realizar_compra(request):
         if response.status_code == 200:
             compra.estado = '0'
             compra.fecha = datetime.now()
-            request.session['compra']=None
+            del request.session['compra']
             return HttpResponseRedirect(
             f"{settings.PATH_SERVER}main/?mensaje=Compra realizada correctamente")
 
